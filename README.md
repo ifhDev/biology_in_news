@@ -36,6 +36,11 @@ pyproject.toml # deps / packaging
 * Structure may shift as real logic lands.  
 * No external data or credentials needed yet.
 
+## Next steps
+
+* setting up logic in main()
+* building actual functions
+
 ---
 
 > Feedback, issue reports, or PRs are welcome while I learn.
