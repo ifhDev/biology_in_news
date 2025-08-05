@@ -39,6 +39,11 @@ pyproject.toml # deps / packaging
 * The codebase is ready for real websites that allow scraping or for static archive/testing purposes.
 * Future features (planned): CSV export, more flexible querying, and support for additional source sites.
 
+## Next steps
+
+* setting up logic in main()
+* building actual functions
+
 ---
 
 > Feedback, issue reports, or PRs are welcome while I learn.
