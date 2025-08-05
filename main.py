@@ -11,11 +11,10 @@ def main():
         for article in articles:
             clean_article = clean_article_data(article)
             # create ID
-            clean_article_data['article_id'] = make_article_id(clean_article)
+            clean_article["article_id"] = make_article_id(clean_article)
         # # drop into duckdb
         #     db = ArticleDuckDB()
         #     db.add_article(clean_article)
-    print('Pipeline ran (most functions are still stubs).')
 
 
 if __name__ == "__main__":
