@@ -1,6 +1,13 @@
 from bs4 import BeautifulSoup
 
 def extract_articles_from_listing(html):
+    """
+    Parse listing HTML and extract article summaries.
+
+    Returns a list of dictionaries (one dict per article) with fields:
+    'type', 'date', 'title', 'doi', and 'authors' (list).
+    """
+
     soup = BeautifulSoup(html, "html.parser")
     article_list = soup.find("ul", class_="list-unstyled")
     article_blocks = article_list.find_all("div", class_="card")

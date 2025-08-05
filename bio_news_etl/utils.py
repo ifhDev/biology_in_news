@@ -1,7 +1,12 @@
 import hashlib
 
 def make_article_id(article):
-    # creates unique id from date+url with SHA256
+    """
+    Generate a unique hash ID for an article.
+    
+    Uses DOI and date (or title if DOI is missing), hashed with SHA256 and returned as hex-string.
+    """
+
     base_string = ""
     if article.get("doi"):
         base_string += article["doi"]

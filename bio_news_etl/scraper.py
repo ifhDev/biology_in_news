@@ -4,6 +4,14 @@ import time
 
 
 def fetch_listing_html(site_url):
+    """
+    Fetch and return HTML from a URL or local file.
+    
+    - downloads the page if site_url starts with 'http'/'https' or 'www'.
+    - otherwise, attempts to read from a local HTML file.
+    Returns the page content as a string.
+    """
+    
     # normalise www URLs (leftover from copy-paste)
     if site_url.startswith("www"):
         site_url = "http://" + site_url

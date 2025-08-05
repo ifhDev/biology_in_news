@@ -1,6 +1,11 @@
 from bio_news_etl import *
 
 def main():
+    """
+    Main pipeline: scrape, parse, clean, hash, and store articles in DuckDB.
+    Prints count of articles found and a sample article at the end.
+    """
+    
     db = ArticleDuckDB()
     for website in WEBSITES:
         print(f"Processing {website}")

@@ -1,4 +1,12 @@
 def clean_article_data(article):
+    """
+    Validate and standardise article dictionary fields.
+    
+    - Fills missing fields with sensible defaults.
+    - Ensures authors field is always a list of strings.
+    Returns the cleaned article dict.
+    """
+    
     # standardises/validates fields
     required_fields = {
         "type": None,
