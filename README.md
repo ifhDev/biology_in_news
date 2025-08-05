@@ -16,30 +16,28 @@ Right now every function is a *stub* — the repo is just the scaffolding.
 ## Current layout
 
 sample/  
-├─ scraper.py # fetch_listing_html(…)  
-├─ parser.py # extract_articles_from_listing(…)  
-├─ cleaner.py # clean_article_data(…)  
-├─ utils.py # make_article_id(…)  
-└─ dbentry.py # class ArticleDuckDB(add_article, …)  
+├─ cleaner.py # `clean_article_data`  
+├─ dbentry.py # class `ArticleDuckDB`  
+├─ parser.py # `extract_articles_from_listing()`  
+├─ scraper.py # `fetch_listing_html()`  
+├─ utils.py # `make_article_id()`  
+└─ websites.py # List of source URLs/files (`WEBSITES`)
 
 scripts/ # CLI wrappers (empty for now)  
-tests/ # unit / integration tests (empty)  
-main.py # will orchestrate the pipeline  
+tests/ # unit / integration tests (only for parser so far, not yet workable from main folder)  
+main.py # orchestrates the pipeline (`main()`)  
 README.md  
 pyproject.toml # deps / packaging  
 
 ---
 
-## Status
+## Current Status & Limitations
 
-* Building phase: only dummy functions & class stubs committed.  
-* Structure may shift as real logic lands.  
-* No external data or credentials needed yet.
-
-## Next steps
-
-* setting up logic in main()
-* building actual functions
+* pipeline is fully functional for local HTML test files.
+* Direct requests to the live PNAS `/latest` page currently result in a 403 Forbidden error** (even with a realistic User-Agent header), despite robots.txt not explicitly forbidding scraping.  
+  As a result, the included pipeline defaults to using a static copy (`tests/fixtures/pnas_latest.htm`) for demonstration and testing.
+* The codebase is ready for real websites that allow scraping or for static archive/testing purposes.
+* Future features (planned): CSV export, more flexible querying, and support for additional source sites.
 
 ---
 
