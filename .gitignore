@@ -11,3 +11,8 @@ wheels/
 
 # empty folders
 docs/*
+devnotes/
+
+# databases
+*.duckdb
+tests/fixtures/*.duckdb

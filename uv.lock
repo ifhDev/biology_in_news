@@ -16,7 +16,7 @@ wheels = [
 ]
 
 [[package]]
-name = "biology-in-news"
+name = "bio-news-etl"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
