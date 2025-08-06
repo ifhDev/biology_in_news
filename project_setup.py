@@ -4,12 +4,11 @@ import sys
 
 def main():
     print("Setting up environment for cloned project...")
-    
-    # ensuring correct location
+
     project_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(project_dir)
 
-    # creating venv (if necessary)    
+    # Create venv (if needed)
     if not os.path.isdir(".venv"):
         print("Creating virtual environment with uv...")
         result = subprocess.run(["uv", "venv"], capture_output=True, text=True)
@@ -20,9 +19,11 @@ def main():
     else:
         print("Virtual environment already exists.")
 
-    # install dependencies
-    print("Installing dependencies from pyproject.toml/uv.lock...")
-    result = subprocess.run(["uv", "pip", "sync", "uv.lock"], capture_output=True, text=True)
+    # Install project dependencies (now works!)
+    print("Installing dependencies from pyproject.toml...")
+    result = subprocess.run([
+        "uv", "pip", "install", "."
+    ], capture_output=True, text=True)
     print(result.stdout)
     if result.returncode != 0:
         print("Error: Failed to install dependencies:", result.stderr)
