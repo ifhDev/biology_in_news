@@ -4,7 +4,13 @@ version = "0.1.0"
 description = "A modular website scraper optimised for an expanding set of biology article sources."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["requests>=2.32.4", "beautifulsoup4>=4.13.4", "duckdb>=1.3.2"]
+dependencies = [
+    "requests>=2.32.4",
+    "beautifulsoup4>=4.13.4",
+    "duckdb>=1.3.2",
+    "numpy>=2.3.2",
+    "pandas>=2.3.1",
+]
 
 [tool.setuptools]
 packages = ["bio_news_etl"]

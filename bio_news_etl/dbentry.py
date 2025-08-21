@@ -45,6 +45,13 @@ class ArticleDuckDB:
 
         return full_query
     
+    def convert_article_to_df(self):
+        "Return articles as a pandas dataframe."
+
+        full_query = self.con.execute("SELECT * FROM articles").fetch_df()
+        
+        return full_query
+    
     def close(self):
         """Close the DuckDB connection."""
         
