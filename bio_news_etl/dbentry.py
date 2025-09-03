@@ -1,4 +1,6 @@
 import duckdb
+from .cleaner import clean_article_data
+from .utils import make_article_id
 
 
 class ArticleDuckDB:
@@ -21,31 +23,59 @@ class ArticleDuckDB:
             );
         """)
 
-    def add_article(self, article):
-        """Insert a cleaned article into the DB (ignores duplicates)."""
-        
-        authors_str = "; ".join(article["authors"]) if article["authors"] else "" # re-strings
-        self.con.execute("""
-            INSERT OR IGNORE INTO articles
-            (article_id, type, date, title, doi, authors)
-            VALUES (?, ?, ?, ?, ?, ?);
-        """, (
-            article["article_id"],
-            article["type"],
-            article["date"],
-            article["title"],
-            article["doi"],
-            authors_str
-        ))
-    
-    def query_articles(self):
-        """Return all articles as a list of tuples."""
+    def add_articles(self, articles):
+        """
+        Insert one or many articles.
+        Accepts a single dict or a list of dicts.
+        Cleans + assigns IDs before insert.
+        """
+        if isinstance(articles, dict):
+            articles = [articles]
 
-        full_query = self.con.execute("SELECT * FROM articles").fetchall()
+        for article in articles:
+            clean = clean_article_data(article)
+            clean["article_id"] = make_article_id(clean)
+            authors_str = "; ".join(clean["authors"]) if clean["authors"] else ""
+            self.con.execute(
+                """
+                INSERT OR IGNORE INTO articles
+                (article_id, type, date, title, doi, authors)
+                VALUES (?, ?, ?, ?, ?, ?);
+                """,
+                (
+                    clean["article_id"],
+                    clean["type"],
+                    clean["date"],
+                    clean["title"],
+                    clean["doi"],
+                    authors_str,
+                )
+            )
 
-        return full_query
-    
+    def query_articles(self, limit=None, order_by=None):
+        """Return rows as tuples; optional LIMIT and ORDER BY."""
+        sql = "SELECT * FROM articles"
+        if order_by:
+            sql += f" ORDER BY {order_by}"
+        if limit is not None:
+            return self.con.execute(sql + " LIMIT ?", [limit]).fetchall()
+        return self.con.execute(sql).fetchall()
+
+    def query_articles_df(self, limit=None, order_by=None):
+        """Return rows as a pandas DataFrame; optional LIMIT and ORDER BY."""
+        sql = "SELECT * FROM articles"
+        if order_by:
+            sql += f" ORDER BY {order_by}"
+        if limit is not None:
+            return self.con.execute(sql + " LIMIT ?", [limit]).fetch_df()
+        return self.con.execute(sql).fetch_df()
+
+    def preview(self, n=5):
+        """Print and return the first n rows as a DataFrame."""
+        df = self.query_articles_df(limit=n)
+        print(df)
+        return df
+
     def close(self):
         """Close the DuckDB connection."""
-        
         self.con.close()
