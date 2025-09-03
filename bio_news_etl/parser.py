@@ -1,4 +1,10 @@
 from bs4 import BeautifulSoup
+from .scraper import fetch_listing_html
+
+def extract(url):
+    """Fetch listing HTML and parse into article dicts."""
+    html = fetch_listing_html(url)
+    return extract_articles_from_listing(html)
 
 def extract_articles_from_listing(html):
     """
@@ -37,6 +43,13 @@ def extract_articles_from_listing(html):
     print(f"Extracted {len(articles)} articles.")
     return articles
 
+def extract(website):
+    # scrape
+    html = fetch_listing_html(website)
+    # parse
+    articles = extract_articles_from_listing(html)
+
+    return articles
 
 
 
